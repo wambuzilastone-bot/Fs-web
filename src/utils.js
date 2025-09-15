@@ -23,12 +23,9 @@ function slugify(str) {
     .replace(/[žźż]/g,'z').replace(/[ýÿ]/g,'y')
     .replace(/[ğ]/g,'g').replace(/[ř]/g,'r')
     .replace(/[ł]/g,'l').replace(/[ß]/g,'ss')
-    .replace(/[
-\s"]/g, '-')
-    .replace(/[
-\(
-\)]/g, '') // Remove parentheses
-    .replace(/[^a-z0-9-]/g, '')
+    .replace(/[\s']/g, '-')      // spaces and apostrophes to hyphens
+    .replace(/[\(\)]/g, '')      // remove parentheses
+    .replace(/[^a-z0-9-]/g, '')  // remove non-alphanumeric/hyphen
     .replace(/--+/g, '-')
     .replace(/-+$/g, '')
     .replace(/^-+/g, '');
