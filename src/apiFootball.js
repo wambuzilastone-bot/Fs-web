@@ -1,7 +1,7 @@
 import axios from "axios";
 
 const API_URL = "https://v3.football.api-sports.io";
-const API_KEY = process.env.API_FOOTBALL_KEY;
+const API_KEY = "8bd4c0d039355b4835c3b71ecb35ede8"; // <-- API key directly included
 
 const client = axios.create({
   baseURL: API_URL,
