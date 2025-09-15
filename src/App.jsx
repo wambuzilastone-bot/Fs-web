@@ -4,15 +4,13 @@ import flags from "./flags.json";
 import { getBetexplorerUrl } from "./utils";
 
 export default function App() {
-  const [country, setCountry] = useState(null);
-  const [league, setLeague] = useState(null);
+  const [selectedCountry, setSelectedCountry] = useState(null);
   const [fixtures, setFixtures] = useState([]);
   const [loading, setLoading] = useState(false);
 
-  async function handleLeagueClick(league) {
+  async function handleLeagueClick(country, league) {
     setLoading(true);
     setFixtures([]);
-    setLeague(league);
     const leagueUrl = getBetexplorerUrl(country, league);
     if (!leagueUrl) { setLoading(false); return; }
     const res = await fetch(`/api/scrape-fixtures?leagueUrl=${leagueUrl}`);
@@ -27,21 +25,27 @@ export default function App() {
         <h1>REAL DATA ⚽</h1>
       </header>
       <div className="countries-list" style={{display:'flex',flexWrap:'wrap'}}>
-        {Object.keys(countries).map((c) => (
-          <div key={c} onClick={() => { setCountry(c); setLeague(null); setFixtures([]); }}
-            style={{margin:'8px',cursor:'pointer',display:'flex',alignItems:'center'}}>
-            <img src={flags[c]} alt={c} width={32} style={{ marginRight: 8 }} />
-            <span>{c}</span>
+        {Object.keys(countries).map((country) => (
+          <div key={country} style={{margin:'8px',cursor:'pointer',display:'flex',flexDirection:'column',alignItems:'flex-start'}}>
+            <div onClick={() => { setSelectedCountry(country); setFixtures([]); }}
+                 style={{display:'flex',alignItems:'center'}}>
+              <img src={flags[country]} alt={country} width={32} style={{ marginRight: 8 }} />
+              <span>{country}</span>
+            </div>
+            {selectedCountry === country && (
+              <div className="leagues-list" style={{margin:'8px 0'}}>
+                {countries[country].map((league) => (
+                  <button key={league}
+                          style={{margin:'2px 8px',fontFamily:'monospace'}}
+                          onClick={() => handleLeagueClick(country, league)}>
+                    {league}
+                  </button>
+                ))}
+              </div>
+            )}
           </div>
         ))}
       </div>
-      {country && (
-        <div className="leagues-list" style={{margin:'16px 0'}}>
-          {countries[country].map((l) => (
-            <button key={l} style={{margin:'0 8px'}} onClick={() => handleLeagueClick(l)}>{l}</button>
-          ))}
-        </div>
-      )}
       {loading && <div className="spinner">Loading...</div>}
       {fixtures.length > 0 && (
         <div className="fixtures">
