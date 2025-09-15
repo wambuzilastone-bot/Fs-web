@@ -1,30 +1,19 @@
-# Fs web
+# Fs-web (API-Football Integration)
 
-A real-time football fixture dashboard scraping live data and metrics from Betexplorer.
-
-## Features
-
-- 🌍 All major countries & leagues, with real flags
-- ⚡ Scrapes *live* fixtures and metrics directly from Betexplorer
-- 📊 Shows WDL, goal ratio, home/away form
-- 🚀 Deploy on Vercel
-
-## Data Format Example
-
-```
-Arsenal vs Man United
-621 - 125
-16/8 - 7/15
-920 - 029
-```
+This app now uses [API-Football](https://www.api-football.com/) for live football data.
 
 ## Setup
 
-1. Clone repository
-2. `npm install`
-3. Add country-league and flag mapping files
-4. Deploy to Vercel (`vercel deploy`)
+- The API key is included directly in `src/apiFootball.js` for demonstration.
+- For production, move your API key to an environment variable for security.
 
-## License
+## Usage
 
-MIT
+- Supported leagues are mapped in `src/utils.js`.
+- See `src/apiFootball.js` for API utility functions.
+- Example league standings shown on homepage.
+
+## Features
+
+- Live standings for major leagues using API-Football.
+- Easy extension for fixtures, teams, etc.
